@@ -5,7 +5,9 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.util.HibernateUtil;
+
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -19,9 +21,8 @@ public class MovieDaoImpl implements MovieDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Long itemId = (Long) session.save(movie);
+            session.save(movie);
             transaction.commit();
-            movie.setId(itemId);
             return movie;
         } catch (DataProcessingException e) {
             if (transaction != null) {
@@ -29,7 +30,9 @@ public class MovieDaoImpl implements MovieDao {
             }
             throw new DataProcessingException("Cannot add movie " + movie, e);
         } finally {
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 

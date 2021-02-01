@@ -34,6 +34,6 @@ public class Main {
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         LocalDate localDate = LocalDate.now();
-        System.out.println(movieSessionService.findAvailableSessions(1L, localDate));
+        System.out.println(movieSessionService.findAvailableSessions(movie.getId(), localDate));
     }
 }

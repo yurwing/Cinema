@@ -4,9 +4,8 @@ import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
-
-import javax.naming.AuthenticationException;
 import java.util.Optional;
+import javax.naming.AuthenticationException;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {

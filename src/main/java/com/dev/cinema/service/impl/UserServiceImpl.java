@@ -4,10 +4,7 @@ import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
-import com.dev.cinema.security.PasswordHashing;
 import com.dev.cinema.service.UserService;
-
-import java.util.Arrays;
 import java.util.Optional;
 
 @Service

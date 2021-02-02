@@ -10,10 +10,9 @@ import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.UserService;
-
-import javax.naming.AuthenticationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.naming.AuthenticationException;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");

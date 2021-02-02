@@ -9,14 +9,21 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordHashing {
+    private static String ALGORITHM = "PBKDF2WithHmacSHA1";
+
     public static String getHash(String password, byte[] salt) {
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
         try {
-            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            StringBuilder hashedPassword = new StringBuilder();
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(ALGORITHM);
             byte[] hash = secretKeyFactory.generateSecret(spec).getEncoded();
-            return Arrays.toString(hash);
+            for (byte b : hash) {
+                hashedPassword.append(String.format("%02x", b));
+            }
+            return hashedPassword.toString();
         } catch (GeneralSecurityException e) {
-            throw new DataProcessingException("Cannot hashing password " + password, e);
+            throw new DataProcessingException("Cannot hashed password " + password +
+                    " by algorithm " + ALGORITHM, e);
         }
     }
 

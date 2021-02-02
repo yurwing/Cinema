@@ -54,21 +54,5 @@ public class Main {
         } catch (AuthenticationException e) {
             throw new RuntimeException("Cannot log in user" + user, e);
         }
-        User user = new User();
-        user.setEmail("email");
-        user.setPassword("pass");
-        AuthenticationService authenticationService = (AuthenticationService) injector
-                .getInstance(AuthenticationService.class);
-        authenticationService.register(user.getEmail(), user.getPassword());
-        System.out.println(user.getPassword());
-        UserService userService = (UserService) injector
-                .getInstance(UserService.class);
-        System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
-        try {
-            System.out.println(authenticationService.login(user.getEmail(), "pass"));
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("Cannot log in user" + user, e);
-        }
-        System.out.println(movieSessionService.findAvailableSessions(movie.getId(), localDate));
     }
 }

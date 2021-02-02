@@ -15,7 +15,17 @@ import java.time.LocalDateTime;
 import javax.naming.AuthenticationException;
 
 public class Main {
-    private static Injector injector = Injector.getInstance("com.dev.cinema");
+    private static final Injector injector = Injector.getInstance("com.dev.cinema");
+    private static final MovieService movieService = (MovieService) injector
+            .getInstance(MovieService.class);
+    private static final CinemaHallService cinemaHallService = (CinemaHallService) injector
+            .getInstance(CinemaHallService.class);
+    private static final MovieSessionService movieSessionService = (MovieSessionService) injector
+            .getInstance(MovieSessionService.class);
+    private static final AuthenticationService authenticationService = (AuthenticationService) injector
+            .getInstance(AuthenticationService.class);
+    private static final UserService userService = (UserService) injector
+            .getInstance(UserService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
@@ -26,16 +36,12 @@ public class Main {
         movieSession.setMovie(movie);
         movieSession.setLocalDateTime(LocalDateTime.now());
         movieSession.setCinemaHall(cinemaHall);
-        MovieService movieService = (MovieService) injector
-                .getInstance(MovieService.class);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector
-                .getInstance(CinemaHallService.class);
+
         movieService.add(movie);
         movieService.getAll();
         cinemaHallService.add(cinemaHall);
         cinemaHallService.getAll();
-        MovieSessionService movieSessionService = (MovieSessionService) injector
-                .getInstance(MovieSessionService.class);
+
         movieSessionService.add(movieSession);
         LocalDate localDate = LocalDate.now();
         System.out.println(movieSessionService.findAvailableSessions(movie.getId(), localDate));
@@ -43,13 +49,12 @@ public class Main {
         User user = new User();
         user.setEmail("email");
         user.setPassword("pass");
-        AuthenticationService authenticationService = (AuthenticationService) injector
-                .getInstance(AuthenticationService.class);
+
         authenticationService.register(user.getEmail(), user.getPassword());
         System.out.println(user.getPassword());
-        UserService userService = (UserService) injector
-                .getInstance(UserService.class);
+
         System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
         System.out.println(authenticationService.login(user.getEmail(), "pass"));
+        authenticationService.register(user.getEmail(), user.getPassword());
     }
 }

@@ -11,13 +11,10 @@ import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.util.HibernateUtil;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -28,7 +25,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
-        ShoppingCart shoppingCart = shoppingCartDao.getByUser(user).get();
         Ticket ticket = new Ticket();
         ticket.setMovieSession(movieSession);
         ticket.setUser(user);
@@ -45,6 +41,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             throw new DataProcessingException("Cannot find tickets by movie session "
                     + movieSession, e);
         }
+        ShoppingCart shoppingCart = shoppingCartDao.getByUser(user).get();
         shoppingCart.setTickets(tickets);
         shoppingCartDao.update(shoppingCart);
     }

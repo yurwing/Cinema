@@ -12,8 +12,6 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
-import org.hibernate.Hibernate;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -75,7 +73,8 @@ public class Main {
         movieService.add(movie1);
         cinemaHallService.add(cinemaHall1);
         movieSessionService.add(movieSession1);
-        System.out.println(movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.now()));
+        System.out.println(movieSessionService.findAvailableSessions(movie1.getId(),
+                LocalDate.now()));
 
         shoppingCartService.addSession(movieSession1, login);
         System.out.println(shoppingCartService.getByUser(login));

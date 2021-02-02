@@ -10,7 +10,10 @@ import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
+import org.hibernate.Hibernate;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,9 +27,10 @@ public class Main {
             .getInstance(MovieSessionService.class);
     private static final AuthenticationService authenticationService =
             (AuthenticationService) injector.getInstance(AuthenticationService.class);
-
     private static final UserService userService = (UserService) injector
             .getInstance(UserService.class);
+    private static final ShoppingCartService shoppingCartService = (ShoppingCartService) injector
+            .getInstance(ShoppingCartService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
@@ -49,8 +53,31 @@ public class Main {
 
         User user = authenticationService.register("email", "pass");
         System.out.println(user.getPassword());
+        User login = authenticationService.login(user.getEmail(), user.getPassword());
 
         System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
         System.out.println(authenticationService.login(user.getEmail(), "pass"));
+
+        shoppingCartService.addSession(movieSession, login);
+        System.out.println(shoppingCartService.getByUser(login));
+
+        Movie movie1 = new Movie();
+        movie1.setTitle("new Movie");
+
+        CinemaHall cinemaHall1 = new CinemaHall();
+        cinemaHall1.setCapacity(4);
+
+        MovieSession movieSession1 = new MovieSession();
+        movieSession1.setMovie(movie1);
+        movieSession1.setLocalDateTime(LocalDateTime.now());
+        movieSession1.setCinemaHall(cinemaHall1);
+
+        movieService.add(movie1);
+        cinemaHallService.add(cinemaHall1);
+        movieSessionService.add(movieSession1);
+        System.out.println(movieSessionService.findAvailableSessions(movie1.getId(), LocalDate.now()));
+
+        shoppingCartService.addSession(movieSession1, login);
+        System.out.println(shoppingCartService.getByUser(login));
     }
 }

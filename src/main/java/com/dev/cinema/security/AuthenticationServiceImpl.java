@@ -1,11 +1,10 @@
 package com.dev.cinema.security;
 
+import com.dev.cinema.exceptions.AuthenticationException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
-import java.util.Optional;
-import javax.naming.AuthenticationException;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -14,10 +13,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
-        Optional<User> userByEmail = userService.findByEmail(email);
-        String hash = PasswordHashing.getHash(password, userByEmail.get().getSalt());
-        if (userByEmail.get().getPassword().equals(hash)) {
-            return userByEmail.get();
+        User userByEmail = userService.findByEmail(email)
+                .orElseThrow(() -> new AuthenticationException("Cannot get user by email "
+                        + email));
+        String hash = PasswordHashing.getHash(password, userByEmail.getSalt());
+        if (userByEmail.getPassword().equals(hash)) {
+            return userByEmail;
         }
         throw new AuthenticationException("Incorrect password");
     }

@@ -1,5 +1,6 @@
 package com.dev.cinema;
 
+import com.dev.cinema.exceptions.AuthenticationException;
 import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
@@ -12,7 +13,6 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import javax.naming.AuthenticationException;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("com.dev.cinema");
@@ -22,8 +22,9 @@ public class Main {
             .getInstance(CinemaHallService.class);
     private static final MovieSessionService movieSessionService = (MovieSessionService) injector
             .getInstance(MovieSessionService.class);
-    private static final AuthenticationService authenticationService = (AuthenticationService) injector
-            .getInstance(AuthenticationService.class);
+    private static final AuthenticationService authenticationService =
+            (AuthenticationService) injector.getInstance(AuthenticationService.class);
+
     private static final UserService userService = (UserService) injector
             .getInstance(UserService.class);
 

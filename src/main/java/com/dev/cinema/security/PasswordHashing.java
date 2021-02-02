@@ -4,12 +4,11 @@ import com.dev.cinema.exceptions.DataProcessingException;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
-import java.util.Arrays;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordHashing {
-    private static String ALGORITHM = "PBKDF2WithHmacSHA1";
+    private static final String ALGORITHM = "PBKDF2WithHmacSHA1";
 
     public static String getHash(String password, byte[] salt) {
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
@@ -22,8 +21,8 @@ public class PasswordHashing {
             }
             return hashedPassword.toString();
         } catch (GeneralSecurityException e) {
-            throw new DataProcessingException("Cannot hashed password " + password +
-                    " by algorithm " + ALGORITHM, e);
+            throw new DataProcessingException("Cannot hashed password " + password
+                    + " by algorithm " + ALGORITHM, e);
         }
     }
 

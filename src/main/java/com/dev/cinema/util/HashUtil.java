@@ -1,4 +1,4 @@
-package com.dev.cinema.security;
+package com.dev.cinema.util;
 
 import com.dev.cinema.exceptions.DataProcessingException;
 import java.security.GeneralSecurityException;
@@ -7,7 +7,7 @@ import java.security.spec.KeySpec;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public class PasswordHashing {
+public class HashUtil {
     private static final String ALGORITHM = "PBKDF2WithHmacSHA1";
 
     public static String getHash(String password, byte[] salt) {

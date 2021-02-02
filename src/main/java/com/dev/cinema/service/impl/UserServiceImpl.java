@@ -4,7 +4,7 @@ import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
-import com.dev.cinema.security.PasswordHashing;
+import com.dev.cinema.util.HashUtil;
 import com.dev.cinema.service.UserService;
 import java.util.Optional;
 
@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        byte[] salt = PasswordHashing.getSalt();
-        user.setPassword(PasswordHashing.getHash(user.getPassword(), salt));
+        byte[] salt = HashUtil.getSalt();
+        user.setPassword(HashUtil.getHash(user.getPassword(), salt));
         user.setSalt(salt);
         return userDao.add(user);
     }

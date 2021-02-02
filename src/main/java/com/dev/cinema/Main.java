@@ -47,15 +47,10 @@ public class Main {
         LocalDate localDate = LocalDate.now();
         System.out.println(movieSessionService.findAvailableSessions(movie.getId(), localDate));
 
-        User user = new User();
-        user.setEmail("email");
-        user.setPassword("pass");
-
-        authenticationService.register(user.getEmail(), user.getPassword());
+        User user = authenticationService.register("email", "pass");
         System.out.println(user.getPassword());
 
         System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
         System.out.println(authenticationService.login(user.getEmail(), "pass"));
-        authenticationService.register(user.getEmail(), user.getPassword());
     }
 }

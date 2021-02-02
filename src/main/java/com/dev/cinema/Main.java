@@ -10,6 +10,7 @@ import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.UserService;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.naming.AuthenticationException;
@@ -17,7 +18,7 @@ import javax.naming.AuthenticationException;
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious123");
         CinemaHall cinemaHall = new CinemaHall();
@@ -49,10 +50,6 @@ public class Main {
         UserService userService = (UserService) injector
                 .getInstance(UserService.class);
         System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
-        try {
-            System.out.println(authenticationService.login(user.getEmail(), "pass"));
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("Cannot log in user" + user, e);
-        }
+        System.out.println(authenticationService.login(user.getEmail(), "pass"));
     }
 }

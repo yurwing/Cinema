@@ -4,16 +4,21 @@ import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.User;
+import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.UserService;
+
+import javax.naming.AuthenticationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious123");
         CinemaHall cinemaHall = new CinemaHall();
@@ -35,5 +40,17 @@ public class Main {
         movieSessionService.add(movieSession);
         LocalDate localDate = LocalDate.now();
         System.out.println(movieSessionService.findAvailableSessions(movie.getId(), localDate));
+
+        User user = new User();
+        user.setEmail("email");
+        user.setPassword("pass");
+        AuthenticationService authenticationService = (AuthenticationService) injector
+                .getInstance(AuthenticationService.class);
+        authenticationService.register(user.getEmail(), user.getPassword());
+        System.out.println(user.getPassword());
+        UserService userService = (UserService) injector
+                .getInstance(UserService.class);
+        System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
+        System.out.println(authenticationService.login(user.getEmail(), "pass"));
     }
 }

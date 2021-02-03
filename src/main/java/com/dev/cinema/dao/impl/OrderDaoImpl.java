@@ -6,11 +6,10 @@ import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.util.List;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
@@ -38,14 +37,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrdersHistory(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query<Order> query = session.createQuery("from Order o " +
-                            "inner join fetch o.user " +
-                            "left join fetch o.tickets t " +
-                            "left join fetch t.movieSession ms " +
-                            "left join fetch ms.movie " +
-                            "left join fetch ms.cinemaHall " +
-                            "where o.user = :user",
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Order> query = session.createQuery("from Order o "
+                            + "inner join fetch o.user "
+                            + "left join fetch o.tickets t "
+                            + "left join fetch t.movieSession ms "
+                            + "left join fetch ms.movie "
+                            + "left join fetch ms.cinemaHall "
+                            + "where o.user = :user",
                     Order.class);
             query.setParameter("user", user);
             return query.getResultList();

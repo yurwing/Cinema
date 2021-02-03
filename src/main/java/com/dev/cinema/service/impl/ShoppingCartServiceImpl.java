@@ -11,10 +11,8 @@ import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.util.HibernateUtil;
-import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -25,10 +23,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
-        addTicket(movieSession, user);
-        List<Ticket> tickets = getTickets(movieSession, user);
-        ShoppingCart shoppingCart = shoppingCartDao.getByUser(user).get();
-        shoppingCart.setTickets(tickets);
+        Ticket ticket = addTicket(movieSession, user);
+        ShoppingCart shoppingCart = getByUser(user);
+        shoppingCart.getTickets().add(ticket);
         shoppingCartDao.update(shoppingCart);
     }
 
@@ -66,24 +63,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
     }
 
-    private void addTicket(MovieSession movieSession, User user) {
+    private Ticket addTicket(MovieSession movieSession, User user) {
         Ticket ticket = new Ticket();
         ticket.setMovieSession(movieSession);
         ticket.setUser(user);
         ticketDao.add(ticket);
-    }
-
-    private List<Ticket> getTickets(MovieSession movieSession, User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Ticket> query = session
-                    .createQuery("select t from Ticket t "
-                            + "left join fetch t.movieSession "
-                            + "where t.user = :user", Ticket.class);
-            query.setParameter("user", user);
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Cannot add session " + movieSession
-                    + " to shopping cart ", e);
-        }
+        return ticket;
     }
 }

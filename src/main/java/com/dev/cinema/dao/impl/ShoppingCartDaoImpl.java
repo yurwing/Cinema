@@ -39,11 +39,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<ShoppingCart> query = session
                     .createQuery("select sc from ShoppingCart sc "
-                            + "inner join fetch sc.user u "
                             + "left join fetch sc.tickets t "
-                            + "left join fetch t.movieSession ms "
-                            + "left join fetch ms.movie "
-                            + "left join fetch ms.cinemaHall "
                             + "where sc.user = :user",
                             ShoppingCart.class);
             query.setParameter("user", user);

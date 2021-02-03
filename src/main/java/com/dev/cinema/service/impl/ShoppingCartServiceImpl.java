@@ -2,7 +2,6 @@ package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.ShoppingCartDao;
 import com.dev.cinema.dao.TicketDao;
-import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.MovieSession;
@@ -10,9 +9,6 @@ import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
-import com.dev.cinema.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {

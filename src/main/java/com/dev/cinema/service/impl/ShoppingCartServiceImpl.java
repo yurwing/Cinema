@@ -23,7 +23,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
-        Ticket ticket = addTicket(movieSession, user);
+        Ticket ticket = new Ticket();
+        ticket.setMovieSession(movieSession);
+        ticket.setUser(user);
+        ticketDao.add(ticket);
         ShoppingCart shoppingCart = getByUser(user);
         shoppingCart.getTickets().add(ticket);
         shoppingCartDao.update(shoppingCart);
@@ -43,31 +46,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void clear(ShoppingCart shoppingCart) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.delete(shoppingCart);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot delete shopping cart "
-                    + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
-
-    private Ticket addTicket(MovieSession movieSession, User user) {
-        Ticket ticket = new Ticket();
-        ticket.setMovieSession(movieSession);
-        ticket.setUser(user);
-        ticketDao.add(ticket);
-        return ticket;
+        shoppingCart.getTickets().clear();
+        shoppingCartDao.update(shoppingCart);
     }
 }

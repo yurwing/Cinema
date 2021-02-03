@@ -25,22 +25,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
-        Ticket ticket = new Ticket();
-        ticket.setMovieSession(movieSession);
-        ticket.setUser(user);
-        ticketDao.add(ticket);
-        List<Ticket> tickets;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Ticket> query = session
-                    .createQuery("select t from Ticket t "
-                            + "left join fetch t.movieSession "
-                            + "where t.user = :user", Ticket.class);
-            query.setParameter("user", user);
-            tickets = query.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Cannot find tickets by movie session "
-                    + movieSession, e);
-        }
+        addTicket(movieSession, user);
+        List<Ticket> tickets = getTickets(movieSession, user);
         ShoppingCart shoppingCart = shoppingCartDao.getByUser(user).get();
         shoppingCart.setTickets(tickets);
         shoppingCartDao.update(shoppingCart);
@@ -77,6 +63,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    private void addTicket(MovieSession movieSession, User user) {
+        Ticket ticket = new Ticket();
+        ticket.setMovieSession(movieSession);
+        ticket.setUser(user);
+        ticketDao.add(ticket);
+    }
+
+    private List<Ticket> getTickets(MovieSession movieSession, User user) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Ticket> query = session
+                    .createQuery("select t from Ticket t "
+                            + "left join fetch t.movieSession "
+                            + "where t.user = :user", Ticket.class);
+            query.setParameter("user", user);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Cannot add session " + movieSession
+                    + " to shopping cart ", e);
         }
     }
 }

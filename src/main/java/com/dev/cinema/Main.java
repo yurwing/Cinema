@@ -51,7 +51,7 @@ public class Main {
 
         User user = authenticationService.register("email", "pass");
         System.out.println(user.getPassword());
-        User login = authenticationService.login(user.getEmail(), user.getPassword());
+        User login = authenticationService.login(user.getEmail(), "pass");
 
         System.out.println(userService.findByEmail(user.getEmail()).get().getPassword());
         System.out.println(authenticationService.login(user.getEmail(), "pass"));

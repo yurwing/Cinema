@@ -85,8 +85,7 @@ public class Main {
         ShoppingCart shoppingCart = shoppingCartService.getByUser(login);
         System.out.println(shoppingCart);
 
-        Order order = orderService.completeOrder(shoppingCart);
-        System.out.println(order);
-        System.out.println(orderService.getOrdersHistory(user));
+        orderService.completeOrder(shoppingCart);
+        (orderService.getOrdersHistory(user)).forEach(System.out::println);
     }
 }

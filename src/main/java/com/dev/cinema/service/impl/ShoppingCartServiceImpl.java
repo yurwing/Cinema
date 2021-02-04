@@ -43,7 +43,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartDao.update(shoppingCart);
     }
 
-    private Ticket getTicket (MovieSession movieSession, User user) {
+    private Ticket getTicket(MovieSession movieSession, User user) {
         Ticket ticket = new Ticket();
         ticket.setMovieSession(movieSession);
         ticket.setUser(user);

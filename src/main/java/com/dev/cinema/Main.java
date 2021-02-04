@@ -85,6 +85,6 @@ public class Main {
         System.out.println(shoppingCart);
 
         orderService.completeOrder(shoppingCart);
-        (orderService.getOrdersHistory(user)).forEach(System.out::println);
+        orderService.getOrdersHistory(user).forEach(System.out::println);
     }
 }

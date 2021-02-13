@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -48,45 +47,11 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements Mo
 
     @Override
     public MovieSession delete(MovieSession movieSession) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = super.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.delete(movieSession);
-            transaction.commit();
-            return movieSession;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot delete movie session " + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return super.delete(movieSession);
     }
 
     @Override
     public MovieSession update(MovieSession movieSession) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = super.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.update(movieSession);
-            transaction.commit();
-            return movieSession;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot update movie session " + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return super.update(movieSession);
     }
 }

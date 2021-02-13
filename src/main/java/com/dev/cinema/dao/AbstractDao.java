@@ -57,4 +57,46 @@ public abstract class AbstractDao<T> {
                     + " by id " + id, e);
         }
     }
+
+    public T delete(T t) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.delete(t);
+            transaction.commit();
+            return t;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Cannot delete " + t, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public T update(T t) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(t);
+            transaction.commit();
+            return t;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Cannot update " + t, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }

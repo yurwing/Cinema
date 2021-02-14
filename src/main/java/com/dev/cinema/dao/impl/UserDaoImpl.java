@@ -1,5 +1,6 @@
 package com.dev.cinema.dao.impl;
 
+import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.User;
@@ -12,39 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
-    private final SessionFactory sessionFactory;
-
-    @Autowired
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public UserDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        super(sessionFactory);
     }
 
     @Override
     public User add(User user) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            return user;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot add user " + user, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return super.add(user);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = super.getSessionFactory().openSession()) {
             Query<User> query = session.createQuery("from User where email = :email", User.class);
             query.setParameter("email", email);
             return query.uniqueResultOptional();
@@ -52,4 +33,11 @@ public class UserDaoImpl implements UserDao {
             throw new DataProcessingException("Cannot find user by email " + email, e);
         }
     }
+
+    @Override
+    public Optional<User> getById(Long id) {
+        return super.getById(User.class, id);
+    }
+
+
 }

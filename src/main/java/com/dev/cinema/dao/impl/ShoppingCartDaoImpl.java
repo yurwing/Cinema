@@ -1,5 +1,6 @@
 package com.dev.cinema.dao.impl;
 
+import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.ShoppingCartDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.ShoppingCart;
@@ -12,39 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShoppingCartDaoImpl implements ShoppingCartDao {
-    private final SessionFactory sessionFactory;
-
-    @Autowired
+public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements ShoppingCartDao {
     public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        super(sessionFactory);
     }
 
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(shoppingCart);
-            transaction.commit();
-            return shoppingCart;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot add shopping cart " + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return super.add(shoppingCart);
     }
 
     @Override
     public ShoppingCart getByUser(User user) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = super.getSessionFactory().openSession()) {
             Query<ShoppingCart> query = session
                     .createQuery("select sc from ShoppingCart sc "
                             + "left join fetch sc.tickets t "
@@ -58,23 +39,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     @Override
-    public void update(ShoppingCart shoppingCart) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.update(shoppingCart);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot update shopping cart " + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    public ShoppingCart update(ShoppingCart shoppingCart) {
+        return super.update(shoppingCart);
     }
 }

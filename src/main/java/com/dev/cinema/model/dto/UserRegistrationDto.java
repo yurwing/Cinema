@@ -1,6 +1,6 @@
-package com.dev.cinema.model.dto.request;
+package com.dev.cinema.model.dto;
 
-public class UserRequestDto {
+public class UserRegistrationDto {
     private String email;
     private String password;
     private String repeatPassword;

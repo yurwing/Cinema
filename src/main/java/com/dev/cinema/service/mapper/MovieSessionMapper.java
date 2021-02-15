@@ -35,7 +35,6 @@ public class MovieSessionMapper implements Mapper<MovieSession,
     @Override
     public MovieSession getEntity(MovieSessionRequestDto movieSessionRequestDto) {
         MovieSession movieSession = new MovieSession();
-        movieSession.setId(movieSessionRequestDto.getId());
         movieSession.setMovie(movieService.getById(movieSessionRequestDto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService.getById(movieSessionRequestDto
                 .getCinemaHallId()));

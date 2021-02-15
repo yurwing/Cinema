@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,13 +45,13 @@ public class MovieSessionController {
         movieSessionService.add(movieSessionMapper.getEntity(movieSessionRequestDto));
     }
 
-    @DeleteMapping
-    public void deleteMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
-        movieSessionService.delete(movieSessionMapper.getEntity(movieSessionRequestDto));
+    @DeleteMapping({"/{id}"})
+    public void deleteMovieSession(@PathVariable Long id) {
+        movieSessionService.delete(id);
     }
 
-    @PutMapping
-    public void updateMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
-        movieSessionService.update(movieSessionMapper.getEntity(movieSessionRequestDto));
+    @PutMapping("/{id}")
+    public void updateMovieSession(@PathVariable Long id) {
+        movieSessionService.update(id);
     }
 }

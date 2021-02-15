@@ -1,5 +1,6 @@
 package com.dev.cinema.controller;
 
+import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.dto.request.MovieSessionRequestDto;
 import com.dev.cinema.model.dto.response.MovieSessionResponseDto;
 import com.dev.cinema.service.MovieSessionService;
@@ -51,7 +52,10 @@ public class MovieSessionController {
     }
 
     @PutMapping("/{id}")
-    public void updateMovieSession(@PathVariable Long id) {
-        movieSessionService.update(id);
+    public void updateMovieSession(@PathVariable Long id,
+                                   @RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+        MovieSession movieSession = movieSessionMapper.getEntity(movieSessionRequestDto);
+        movieSession.setId(id);
+        movieSessionService.update(movieSession);
     }
 }

@@ -6,7 +6,8 @@ import com.dev.cinema.model.dto.response.UserResponseDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserMapper implements Mapper<User, UserResponseDto, UserRequestDto> {
+public class UserMapper implements MapperToDto<User,
+        UserResponseDto>, MapperToEntity<User, UserRequestDto> {
     @Override
     public UserResponseDto getDto(User user) {
         UserResponseDto userResponseDto = new UserResponseDto();

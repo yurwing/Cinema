@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MovieSessionMapper implements Mapper<MovieSession,
-        MovieSessionResponseDto, MovieSessionRequestDto> {
+public class MovieSessionMapper implements MapperToDto<MovieSession,
+        MovieSessionResponseDto>, MapperToEntity<MovieSession, MovieSessionRequestDto> {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
 

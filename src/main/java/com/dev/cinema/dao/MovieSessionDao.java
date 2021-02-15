@@ -12,7 +12,7 @@ public interface MovieSessionDao {
 
     Optional<MovieSession> getById(Long id);
 
-    MovieSession delete(MovieSession movieSession);
+    void delete(MovieSession movieSession);
 
-    MovieSession update(MovieSession movieSession);
+    void update(MovieSession movieSession);
 }

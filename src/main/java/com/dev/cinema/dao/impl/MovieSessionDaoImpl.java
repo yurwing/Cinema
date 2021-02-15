@@ -46,12 +46,12 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements Mo
     }
 
     @Override
-    public MovieSession delete(MovieSession movieSession) {
-        return super.delete(movieSession);
+    public void delete(MovieSession movieSession) {
+        super.delete(movieSession);
     }
 
     @Override
-    public MovieSession update(MovieSession movieSession) {
-        return super.update(movieSession);
+    public void update(MovieSession movieSession) {
+        super.update(movieSession);
     }
 }

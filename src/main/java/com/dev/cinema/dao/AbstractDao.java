@@ -58,7 +58,7 @@ public abstract class AbstractDao<T> {
         }
     }
 
-    public T delete(T t) {
+    public void delete(T t) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -66,7 +66,6 @@ public abstract class AbstractDao<T> {
             transaction = session.beginTransaction();
             session.delete(t);
             transaction.commit();
-            return t;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -79,7 +78,7 @@ public abstract class AbstractDao<T> {
         }
     }
 
-    public T update(T t) {
+    public void update(T t) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -87,7 +86,6 @@ public abstract class AbstractDao<T> {
             transaction = session.beginTransaction();
             session.update(t);
             transaction.commit();
-            return t;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

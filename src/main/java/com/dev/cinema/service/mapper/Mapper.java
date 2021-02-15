@@ -1,7 +1,7 @@
 package com.dev.cinema.service.mapper;
 
 public interface Mapper<T, S, U> {
-    S getDto(T t);
+    S getDto(T entity);
 
-    T getEntity(U u);
+    T getEntity(U requestDto);
 }

@@ -7,9 +7,7 @@ import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -39,7 +37,7 @@ public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements Sh
     }
 
     @Override
-    public ShoppingCart update(ShoppingCart shoppingCart) {
-        return super.update(shoppingCart);
+    public void update(ShoppingCart shoppingCart) {
+        super.update(shoppingCart);
     }
 }

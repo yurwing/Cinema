@@ -38,7 +38,8 @@ public class ShoppingCartMapper implements Mapper<ShoppingCart,
         ShoppingCart shoppingCartByUser = shoppingCartService.getByUser(userService
                 .findByEmail(shoppingCartRequestDto.getUserEmail()).get());
         shoppingCart.setTickets(shoppingCartByUser.getTickets().stream()
-                .filter(s -> s.getMovieSession().getId().equals(shoppingCartRequestDto.getMovieSessionId()))
+                .filter(s -> s.getMovieSession().getId()
+                        .equals(shoppingCartRequestDto.getMovieSessionId()))
                 .collect(Collectors.toList()));
         return shoppingCart;
     }

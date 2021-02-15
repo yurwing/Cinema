@@ -3,12 +3,12 @@ package com.dev.cinema.service.mapper;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
+import com.dev.cinema.model.User;
 import com.dev.cinema.model.dto.request.OrderRequestDto;
 import com.dev.cinema.model.dto.response.OrderResponseDto;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -38,12 +38,11 @@ public class OrderMapper implements Mapper<Order,
     @Override
     public Order getEntity(OrderRequestDto orderRequestDto) {
         Order order = new Order();
-        order.setUser(userService.findByEmail(orderRequestDto.getUserEmail()).get());
-        ShoppingCart shoppingCartByUser = shoppingCartService.getByUser(userService
-                .findByEmail(orderRequestDto.getUserEmail()).get());
+        User user = userService.findByEmail(orderRequestDto.getUserEmail()).get();
+        order.setUser(user);
+        ShoppingCart shoppingCartByUser = shoppingCartService.getByUser(user);
         order.setTickets(shoppingCartByUser.getTickets());
-        order.setOrderDate(LocalDateTime.parse(orderRequestDto.getOrderDate(),
-                DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        order.setOrderDate(LocalDateTime.parse(orderRequestDto.getOrderDate()));
         return order;
     }
 }

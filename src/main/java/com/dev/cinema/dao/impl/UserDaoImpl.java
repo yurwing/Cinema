@@ -7,9 +7,7 @@ import com.dev.cinema.model.User;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -38,6 +36,4 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public Optional<User> getById(Long id) {
         return super.getById(User.class, id);
     }
-
-
 }

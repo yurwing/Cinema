@@ -6,6 +6,7 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.ShoppingCartMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,10 @@ public class ShoppingCartController {
     private final MovieSessionService movieSessionService;
     private final ShoppingCartMapper shoppingCartMapper;
 
-    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService, MovieSessionService movieSessionService, ShoppingCartMapper shoppingCartMapper) {
+    @Autowired
+    public ShoppingCartController(ShoppingCartService shoppingCartService,
+                                  UserService userService, MovieSessionService movieSessionService,
+                                  ShoppingCartMapper shoppingCartMapper) {
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
         this.movieSessionService = movieSessionService;
@@ -36,6 +40,7 @@ public class ShoppingCartController {
     @PostMapping("/movie-sessions")
     public void addMovieSession(@RequestParam Long userId,
                                 @RequestParam Long movieSessionId) {
-        shoppingCartService.addSession(movieSessionService.getById(movieSessionId), userService.getById(userId));
+        shoppingCartService.addSession(movieSessionService.getById(movieSessionId),
+                userService.getById(userId));
     }
 }

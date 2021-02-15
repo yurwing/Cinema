@@ -1,52 +1,33 @@
 package com.dev.cinema.dao.impl;
 
+import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.CinemaHallDao;
-import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import java.util.List;
-import org.hibernate.Session;
+import java.util.Optional;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CinemaHallDaoImpl implements CinemaHallDao {
-    private final SessionFactory sessionFactory;
-
+public class CinemaHallDaoImpl extends AbstractDao<CinemaHall> implements CinemaHallDao {
     @Autowired
     public CinemaHallDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        super(sessionFactory);
     }
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.persist(cinemaHall);
-            transaction.commit();
-            return cinemaHall;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot create cinema hall " + cinemaHall, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return super.add(cinemaHall);
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Cannot get any cinema hall", e);
-        }
+        return super.getAll(CinemaHall.class);
+    }
+
+    @Override
+    public Optional<CinemaHall> getById(Long id) {
+        return super.getById(CinemaHall.class, id);
     }
 }

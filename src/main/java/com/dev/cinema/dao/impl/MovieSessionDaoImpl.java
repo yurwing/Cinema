@@ -1,29 +1,28 @@
 package com.dev.cinema.dao.impl;
 
+import com.dev.cinema.dao.AbstractDao;
 import com.dev.cinema.dao.MovieSessionDao;
 import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MovieSessionDaoImpl implements MovieSessionDao {
-    private final SessionFactory sessionFactory;
-
+public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements MovieSessionDao {
     @Autowired
     public MovieSessionDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        super(sessionFactory);
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = super.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("select ms from MovieSession ms "
                             + "join fetch ms.movie m "
                             + "where m.id = :movieId "
@@ -40,23 +39,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(movieSession);
-            transaction.commit();
-            return movieSession;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Cannot add movie session " + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return super.add(movieSession);
+    }
+
+    @Override
+    public Optional<MovieSession> getById(Long id) {
+        return super.getById(MovieSession.class, id);
+    }
+
+    @Override
+    public void delete(MovieSession movieSession) {
+        super.delete(movieSession);
+    }
+
+    @Override
+    public void update(MovieSession movieSession) {
+        super.update(movieSession);
     }
 }

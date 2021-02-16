@@ -6,7 +6,8 @@ import com.dev.cinema.model.dto.response.MovieResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MovieMapper implements Mapper<Movie, MovieResponseDto, MovieRequestDto> {
+public class MovieMapper implements MapperToDto<Movie,
+        MovieResponseDto>, MapperToEntity<Movie, MovieRequestDto> {
     @Override
     public MovieResponseDto getDto(Movie movie) {
         MovieResponseDto movieResponseDto = new MovieResponseDto();

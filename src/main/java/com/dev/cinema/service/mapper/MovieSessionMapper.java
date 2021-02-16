@@ -7,11 +7,11 @@ import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class MovieSessionMapper implements Mapper<MovieSession,
-        MovieSessionResponseDto, MovieSessionRequestDto> {
+@Service
+public class MovieSessionMapper implements MapperToDto<MovieSession,
+        MovieSessionResponseDto>, MapperToEntity<MovieSession, MovieSessionRequestDto> {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
 

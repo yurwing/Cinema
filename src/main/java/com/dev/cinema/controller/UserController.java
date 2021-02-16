@@ -3,6 +3,9 @@ package com.dev.cinema.controller;
 import com.dev.cinema.model.dto.response.UserResponseDto;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.service.mapper.UserMapper;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/by-email")
-    public UserResponseDto get(@RequestParam String email) {
+    public UserResponseDto get(@RequestParam @NotNull @Size(min = 4) @Valid String email) {
         return userMapper.getDto(userService.findByEmail(email).get());
     }
 }

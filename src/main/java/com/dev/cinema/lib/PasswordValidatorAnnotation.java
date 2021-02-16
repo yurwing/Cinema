@@ -11,7 +11,7 @@ import javax.validation.Payload;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordValidatorAnnotation {
-    String message() default "Invalid password repetition. Please try again.";
+    String message() default "Invalid password.";
 
     String field();
 

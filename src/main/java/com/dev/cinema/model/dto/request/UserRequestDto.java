@@ -1,16 +1,13 @@
 package com.dev.cinema.model.dto.request;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.dev.cinema.lib.EmailValidatorAnnotation;
+import com.dev.cinema.lib.PasswordValidatorAnnotation;
 
+@PasswordValidatorAnnotation(field = "password", fieldMatch = "repeatPassword")
 public class UserRequestDto {
-    @NotNull
+    @EmailValidatorAnnotation
     private String email;
-    @NotNull
-    @Size(min = 4)
     private String password;
-    @NotNull
-    @Size(min = 4)
     private String repeatPassword;
 
     public String getEmail() {

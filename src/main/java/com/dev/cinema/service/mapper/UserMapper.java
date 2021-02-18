@@ -31,8 +31,6 @@ public class UserMapper implements MapperToDto<User,
         User user = new User();
         user.setEmail(userRequestDto.getEmail());
         user.setPassword(userRequestDto.getPassword());
-        Role role = roleService.getRoleByName(userRequestDto.getRole());
-        user.setRole(role);
         return user;
     }
 }

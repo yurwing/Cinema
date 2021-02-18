@@ -20,6 +20,6 @@ public class AuthenticationController {
     @PostMapping("/register")
     public void register(@RequestBody @Valid UserRequestDto userRequestDto) {
         authenticationService.register(userRequestDto.getEmail(),
-                userRequestDto.getPassword(), userRequestDto.getRole());
+                userRequestDto.getPassword());
     }
 }

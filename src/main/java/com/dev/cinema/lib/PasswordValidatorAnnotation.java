@@ -20,10 +20,4 @@ public @interface PasswordValidatorAnnotation {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    @Target({ ElementType.TYPE })
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface List {
-        PasswordValidatorAnnotation[] value();
-    }
 }

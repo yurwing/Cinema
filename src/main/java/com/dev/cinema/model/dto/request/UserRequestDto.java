@@ -2,6 +2,7 @@ package com.dev.cinema.model.dto.request;
 
 import com.dev.cinema.lib.EmailValidatorAnnotation;
 import com.dev.cinema.lib.PasswordValidatorAnnotation;
+import javax.validation.constraints.NotNull;
 
 @PasswordValidatorAnnotation(field = "password", fieldMatch = "repeatPassword")
 public class UserRequestDto {
@@ -9,6 +10,8 @@ public class UserRequestDto {
     private String email;
     private String password;
     private String repeatPassword;
+    @NotNull
+    private String role;
 
     public String getEmail() {
         return email;
@@ -32,5 +35,13 @@ public class UserRequestDto {
 
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

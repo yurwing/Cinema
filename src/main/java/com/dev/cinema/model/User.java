@@ -5,17 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User z{
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String email;
     private String password;
+    @ManyToOne
+    private Role role;
 
     public Long getId() {
         return id;
@@ -41,11 +44,20 @@ public class User z{
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{"
                 + "id=" + id
                 + ", email='" + email + '\''
+                + ", role='" + role + '\''
                 + '}';
     }
 }

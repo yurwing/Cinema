@@ -4,6 +4,7 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.RoleService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        user.setRole(roleService.getRoleByName("USER"));
+        user.setRole(List.of(roleService.getRoleByName("USER")));
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
         return user;

@@ -34,16 +34,6 @@ public class Role {
     }
 
     public enum RoleName {
-        USER("USER"), ADMIN("ADMIN");
-
-        private final String role;
-
-        RoleName(String role) {
-            this.role = role;
-        }
-
-        public String getRole() {
-            return role;
-        }
+        USER, ADMIN;
     }
 }

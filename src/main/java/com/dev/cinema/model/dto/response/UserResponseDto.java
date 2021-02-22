@@ -1,11 +1,8 @@
 package com.dev.cinema.model.dto.response;
 
-import java.util.List;
-
 public class UserResponseDto {
     private Long id;
     private String email;
-    private List<String> roles;
 
     public Long getId() {
         return id;
@@ -21,13 +18,5 @@ public class UserResponseDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
     }
 }

@@ -33,7 +33,7 @@ public class ShoppingCartController {
         this.shoppingCartMapper = shoppingCartMapper;
     }
 
-    @GetMapping("/by-user")
+    @GetMapping
     public ShoppingCartResponseDto get(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userService.findByEmail(userDetails.getUsername()).get();

@@ -9,21 +9,13 @@ It has N-tier architecture with layers:
 
 **Visitors have different functions. It is depends on roles that they have.**
 
-**Without role:**
-* Authorization;
-* Registration.
-
-**With role - "User":**
-* View data about movies;
-* View data about movie-sessions; 
-* View data about cinema-halls;
-* Add movie-sessions to shopping cart;
-* Complete order.
-
-**With role - "Admin":**
-* View data and add movies ;
-* View data, delete, update and add movie-sessions;
-* View data and add cinema-halls;
+|          Without role    |                 USER              |                        ADMIN                   |
+|--------------------------|-----------------------------------|------------------------------------------------|
+|Authorization             |View data about movies             |View data and add movies                        |
+|Registration              |View data about movie-sessions     |View data, delete, update and add movie-sessions|
+|                          |View data about cinema-halls       |View data and add cinema-halls                  |
+|                          |Add movie-sessions to shopping cart|                                                |
+|                          |Complete order                     |                                                |
 
 ###Technologies:
 * Java;

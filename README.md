@@ -17,7 +17,7 @@ It has N-tier architecture with layers:
 |Add movie-sessions to shopping cart|                                                |              |
 |Complete order                     |                                                |              |
 
-###Technologies:
+### Technologies:
 * Java;
 * Spring Core / Security / MVC;
 * Maven;
@@ -25,7 +25,7 @@ It has N-tier architecture with layers:
 * MySQL;
 * Tomcat.
 
-###Configuration
+### Configuration:
 1. Download and install the JDK.
 2. Download and install Apache Tomcat.
 3. Download and install MySQL and create schema.
